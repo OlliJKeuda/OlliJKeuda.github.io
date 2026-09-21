@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Muuttujat | Ohjelmoinnin perusteet | Keuda</title>
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <main id="content">
+    <h1>Muuttujat</h1>
+    <p class="lead">Muuttuja on nimetty paikka, johon ohjelma tallentaa arvon myöhempää käyttöä varten.</p>
+
+    <h2>Muuttujan luominen</h2>
+    <p>Muuttujalle annetaan nimi ja arvo. Nimen avulla arvoon voi palata myöhemmin ohjelmassa.</p>
+
+    <pre data-title="muuttujat.js"><code>let nimi = "Aino";
+let ika = 19;
+console.log(nimi, ika);</code></pre>
+
+    <div class="callout tip">
+      <strong class="callout-title">Vinkki</strong>
+      <p>Anna muuttujalle nimi, joka kertoo mitä arvo tarkoittaa. <code>ika</code> on parempi nimi kuin <code>x</code>.</p>
+    </div>
+
+    <h2>Kokeile itse</h2>
+    <p>Muuta arvoja ja paina Suorita.</p>
+    <div class="tryit" data-mode="js">
+      <textarea>let hinta = 12.5;
+let maara = 3;
+let yhteensa = hinta * maara;
+console.log("Yhteensä:", yhteensa, "€");</textarea>
+    </div>
+
+    <h2>Yleisiä tietotyyppejä</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tyyppi</th><th>Kuvaus</th><th>Esimerkki</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Merkkijono</td><td>Teksti</td><td><code>"Hei"</code></td></tr>
+          <tr><td>Luku</td><td>Kokonaisluku tai desimaaliluku</td><td><code>42</code>, <code>3.14</code></td></tr>
+          <tr><td>Totuusarvo</td><td>Tosi tai epätosi</td><td><code>true</code>, <code>false</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warning">
+      <strong class="callout-title">Huomaa</strong>
+      <p>Isot ja pienet kirjaimet ovat eri merkkejä. <code>Nimi</code> ja <code>nimi</code> ovat kaksi eri muuttujaa.</p>
+    </div>
+
+    <h2>Tehtävä</h2>
+    <div class="callout task">
+      <strong class="callout-title">Tehtävä</strong>
+      <p>Luo muuttujat omalle nimellesi ja iällesi ja tulosta ne konsoliin. Palauta ratkaisu Moodlessa.</p>
+    </div>
+
+    <h2>Yhteenveto</h2>
+    <ul>
+      <li>Muuttuja tallentaa arvon nimen alle.</li>
+      <li>Hyvä nimi kertoo, mitä arvo tarkoittaa.</li>
+      <li>Arvoilla on tyyppi: merkkijono, luku tai totuusarvo.</li>
+    </ul>
+  </main>
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>
