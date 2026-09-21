@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osa 4: Ehtolauseen operaattorit | Ohjelmoinnin perusteet | Keuda</title>
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <main id="content" data-toc>
+    <h1>Osa 4: Ehtolauseen operaattorit</h1>
+    <p class="lead">Vertailuoperaattoreilla ja JA- ja TAI-ehdoilla rakennat ehtoja, joiden perusteella ohjelma valitsee, mitä koodia ajetaan.</p>
+
+    <h2>Vertailuoperaattorit</h2>
+    <p><code>if</code>-lauseeseen lisätään ehto, jossa arvoja vertaillaan operaattoreilla.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Operaattori</th><th>Tarkoitus</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>==</code></td><td>yhtäsuuri kuin (arvot ovat samat)</td></tr>
+          <tr><td><code>!=</code></td><td>ei yhtäsuuri kuin</td></tr>
+          <tr><td><code>&gt;</code></td><td>suurempi kuin</td></tr>
+          <tr><td><code>&lt;</code></td><td>pienempi kuin</td></tr>
+          <tr><td><code>&gt;=</code></td><td>suurempi tai yhtäsuuri kuin</td></tr>
+          <tr><td><code>&lt;=</code></td><td>pienempi tai yhtäsuuri kuin</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Yhtäsuuri kuin (==)</h3>
+    <p>Tarkistetaan, ovatko annetut arvot yhtäsuuria eli samoja, lisäämällä arvojen väliin kaksi yhtä kuin -merkkiä <code>==</code>.</p>
+
+    <pre><code class="language-csharp">string merkkijono = "Omena";
+
+if (merkkijono == "Omena")
+{
+    Console.WriteLine("Merkkijono on Omena");
+}
+
+int luku = 10;
+
+if (luku == 10)
+{
+    Console.WriteLine("Luku on yhtäsuuri kuin 10");
+}</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Merkkijono on Omena
+Luku on yhtäsuuri kuin 10</code></pre>
+
+    <h3>Suurempi ja pienempi kuin</h3>
+    <p>Kun halutaan verrata, onko luku suurempi tai pienempi kuin toinen luku, käytetään merkkejä <code>&gt;</code> ja <code>&lt;</code>.</p>
+
+    <pre><code class="language-csharp">int luku = 5;
+
+if (luku &gt; 10)
+{
+    Console.WriteLine("Luku on suurempi kuin 10");
+}
+else if (luku &lt; 10)
+{
+    Console.WriteLine("Luku on pienempi kuin 10");
+}</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Luku on pienempi kuin 10</code></pre>
+
+    <p>Näiden perään voidaan lisätä myös <code>=</code>-merkki. Silloin tarkistetaan, onko luku suurempi <strong>tai yhtäsuuri</strong> kuin (<code>&gt;=</code>) tai pienempi <strong>tai yhtäsuuri</strong> kuin (<code>&lt;=</code>) annettu luku:</p>
+
+    <pre><code class="language-csharp">int luku = 10;
+
+if (luku &gt;= 10)
+{
+    Console.WriteLine("Luku on suurempi tai yhtäsuuri kuin 10");
+}</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Luku on suurempi tai yhtäsuuri kuin 10</code></pre>
+
+    <h3>Ei yhtäsuuri kuin (!=)</h3>
+    <p>Voidaan myös tarkistaa, onko annettu arvo <strong>ei yhtäsuuri kuin</strong> toinen arvo.</p>
+
+    <pre><code class="language-csharp">int luku = 10;
+
+if (luku != 10)
+{
+    Console.WriteLine("Luku EI ole yhtäsuuri kuin 10");
+}</code></pre>
+
+    <p>Tässä esimerkissä luku on 10, joten ehto ei toteudu eikä konsoliin tulosteta mitään.</p>
+
+    <h2>JA- ja TAI-operaattorit</h2>
+
+    <h3>JA-operaattori (AND)</h3>
+    <p>Ehtoihin voidaan lisätä useita tarkistuksia, jolloin ehto voidaan määritellä laajemmin. <code>if</code>- ja <code>else if</code> -ehtoihin lisätään useita määrittelyjä kahdella &amp;-merkillä <code>&amp;&amp;</code> (näppäinyhdistelmä <kbd>Shift</kbd> + <kbd>6</kbd>). Ehto toteutuu vain, jos <strong>kaikki</strong> tarkistukset toteutuvat.</p>
+
+    <pre><code class="language-csharp">string nimi = "Pekka";
+int ikä = 20;
+
+if (nimi == "Pekka" &amp;&amp; ikä &lt; 18)
+{
+    // JOS nimi-muuttujan arvo on "Pekka"
+    // JA ikä-muuttujan arvo on alle 18
+    // niin tämä ehto toteutuu
+    Console.WriteLine("Pekka on alaikäinen");
+}
+else if (nimi == "Pekka" &amp;&amp; ikä &gt;= 18)
+{
+    // JOS nimi-muuttujan arvo on "Pekka"
+    // JA ikä-muuttujan arvo on suurempi tai yhtäsuuri kuin 18
+    // niin tämä ehto toteutuu
+    Console.WriteLine("Pekka on aikuinen");
+}</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Pekka on aikuinen</code></pre>
+
+    <h3>TAI-operaattori (OR)</h3>
+    <p><code>if-else</code>-lauseeseen voidaan määrittää myös vaihtoehtoisia ehtoja, joista jokin riittää ehdon toteutumiseen. Tämä lisätään kahdella pystyviivalla <code>||</code> (pikanäppäin <kbd>Alt Gr</kbd> + <kbd>&lt;</kbd>). Ehto toteutuu, jos <strong>jokin</strong> tarkistuksista toteutuu.</p>
+
+    <pre><code class="language-csharp">int arvosana = 4;   // integer-muuttuja
+
+if (arvosana == 0)
+{
+    // Jos arvosana on 0, niin hylätty
+    Console.WriteLine("Hylätty");
+}
+else if (arvosana == 1 || arvosana == 2)
+{
+    // Jos arvosana on 1 TAI 2, niin tyydyttävä
+    Console.WriteLine("Tyydyttävä");
+}
+else if (arvosana == 3 || arvosana == 4)
+{
+    // Jos arvosana on 3 TAI 4, niin hyvä
+    Console.WriteLine("Hyvä");
+}
+else if (arvosana == 5)
+{
+    // Jos arvosana on 5, niin kiitettävä
+    Console.WriteLine("Kiitettävä");
+}
+else
+{
+    // Jos annettu arvosana ei ole 0-5 väliltä, tämä ehto toteutuu
+    Console.WriteLine("Ei mahdollinen arvosana..");
+}</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Hyvä</code></pre>
+
+    <h2>Harjoitukset</h2>
+    <div class="callout task">
+      <strong class="callout-title">Harjoitukset Moodlessa</strong>
+      <p>Tämän osan harjoitukset tehdään ja palautetaan Moodlessa.</p>
+    </div>
+  </main>
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

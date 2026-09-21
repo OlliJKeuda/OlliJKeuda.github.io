@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osa 5: Ikuinen silmukka | Ohjelmoinnin perusteet | Keuda</title>
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <main id="content" data-toc>
+    <h1>Osa 5: Ikuinen silmukka</h1>
+    <p class="lead">Ikuinen silmukka toistaa koodia, kunnes sen sisältä poistutaan <code>break</code>-komennolla.</p>
+
+    <h2>Ikuinen silmukka</h2>
+    <p>Ikuisen silmukan saa, kun <code>while</code>-silmukan ehdoksi laitetaan <code>true</code>. Ikuinen silmukka pyörii loputtomiin, ellei sitä lopeteta silmukan sisältä esimerkiksi <code>if</code>-ehdolla.</p>
+
+    <pre><code class="language-csharp">while (true)
+{
+    Console.WriteLine("weee");
+}</code></pre>
+
+    <p>Konsoli tulostaa loputtomiin tekstin "weee":</p>
+
+    <pre class="output" data-title="Konsoli"><code>weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+...</code></pre>
+
+    <div class="callout warning">
+      <strong class="callout-title">Sovellus ei lopu itsestään</strong>
+      <p>Ikuista silmukkaa ajava sovellus jatkaa, kunnes suljet konsoli-ikkunan.</p>
+    </div>
+
+    <h2>Silmukasta poistuminen</h2>
+    <p>Silmukasta voidaan poistua aikaisemmin <code>break;</code>-komennolla. Sitä voidaan kutsua esimerkiksi <code>while</code>-silmukan sisällä olevassa <code>if</code>-lauseessa.</p>
+
+    <pre><code class="language-csharp">int i = 1;   // kokonaisluku silmukkaa varten
+
+while (true)
+{
+    Console.WriteLine("weee");
+
+    // Kun i:n arvo on 15, niin ehto toteutuu
+    if (i == 15)
+    {
+        // break-komento poistaa meidät silmukasta
+        break;
+    }
+
+    i++;   // Lisätään i:hin yksi
+}</code></pre>
+
+    <p>Nyt sovellus tulostaa sanan "weee" vain 15 kertaa. Kun <code>i</code>-muuttujan arvo on 15, <code>if</code>-lauseessa kutsutaan <code>break;</code>-komentoa, joka poistaa meidät silmukasta.</p>
+
+    <pre class="output" data-title="Konsoli"><code>weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee
+weee</code></pre>
+
+    <h2>Harjoitukset</h2>
+    <div class="callout task">
+      <strong class="callout-title">Harjoitukset Moodlessa</strong>
+      <p>Tämän osan harjoitukset tehdään ja palautetaan Moodlessa.</p>
+    </div>
+  </main>
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

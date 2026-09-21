@@ -8,68 +8,68 @@ edit HTML, push, done. Assignments stay in Moodle; this site holds the materials
 ```
 index.html                     home page (course cards, generated)
 assets/
-  css/style.css                styles; brand colours are at the top
+  css/style.css                styles; Keuda colour and font tokens are at the top
   js/nav.js                    THE site map: courses, sections, pages, UI text
-  js/site.js                   builds header, sidebar, pager, editors (rarely edited)
-  img/logo.svg                 placeholder logo, replace with the official one
+  js/site.js                   builds header, sidebar, pager, code blocks (rarely edited)
+  img/                         logo.svg, logo-negative.svg, favicon.svg, screenshots
+  fonts/                       put the Titillium Web files here (see README.txt)
 ohjelmointi-1/
   index.html                   course overview (generated from nav.js)
   ohjelmoinnin-perusteet/
     index.html                 section overview
-    muuttujat.html             a lesson page
+    osa-1-ensimmainen-ohjelma.html … osa-6-taulukot-ja-listat.html
   olio-ohjelmointi/ …
 ohjelmointi-2/ …
 _template/page.html            blank lesson page to copy
 ```
 
-One folder per section, one HTML file per lesson. Every page only contains its
-own content; the header, sidebar, breadcrumb and Previous/Next buttons are added
+One folder per section, one HTML file per lesson. A page only contains its own
+content; the header, sidebar, breadcrumb and Previous/Next buttons are added
 automatically from `assets/js/nav.js`.
 
 ## Add a lesson page
 
-1. Copy `_template/page.html` into the section folder, e.g. `ohjelmointi-1/olio-ohjelmointi/luokat.html`.
+1. Copy `_template/page.html` into the section folder.
 2. Edit the `<title>` and the content.
 3. Add it to that section's `pages` list in `assets/js/nav.js`:
    ```js
-   { file: "luokat.html", title: "Luokat" }
+   { file: "luokat.html", title: "Luokat", desc: "One line shown on the section overview." }
    ```
    The order in this list is the reading order (and the Previous/Next order).
 
 ## Add a section or a course
 
 Add an entry to `nav.js` and create the folder with an `index.html`. Copy an
-existing section's `index.html`: it only needs the title, a lead paragraph and
+existing section's `index.html`: it only needs a title, a lead paragraph and
 `<div data-section-toc></div>`. For a new course, copy `ohjelmointi-1/index.html`.
+Each course has a `color` in `nav.js`: `"green"`, `"purple"` or `"orange"`.
 
 ## Components
 
 ```html
-<!-- Code block (copy button added automatically; data-title is optional) -->
-<pre data-title="app.js"><code>console.log("Hei");</code></pre>
+<!-- Code, with syntax colours. Use &lt; &gt; &amp; for < > & inside code. -->
+<pre data-title="Program.cs"><code class="language-csharp">int a = 1;</code></pre>
 
-<!-- Callouts: note (default) | tip | warning | task -->
-<div class="callout tip">
-  <strong class="callout-title">Vinkki</strong>
-  <p>Text.</p>
-</div>
+<!-- Console output -->
+<pre class="output" data-title="Konsoli"><code>Hello World!</code></pre>
 
-<!-- Live editor: data-mode="js" (console.log output) or "html" (rendered page).
-     Add data-autorun to run on page load. Use &lt; and &amp; inside the textarea. -->
-<div class="tryit" data-mode="js"><textarea>console.log(1 + 1);</textarea></div>
+<!-- Callouts: note | tip | warning | task -->
+<div class="callout tip"><strong class="callout-title">Vinkki</strong><p>Text.</p></div>
 
 <!-- Table: wrap it so it scrolls on phones -->
 <div class="table-wrap"><table>…</table></div>
 
-<!-- Button-style link -->
-<a class="btn" href="…">Text</a>
+<!-- "On this page" list built from the h2 headings: add data-toc to <main> -->
+<main id="content" data-toc>
 
 <!-- On a section overview page: automatic list of the section's lessons -->
 <div data-section-toc></div>
+
+<!-- Live editor for HTML / JavaScript lessons (C# cannot run in the browser) -->
+<div class="tryit" data-mode="js"><textarea>console.log(1 + 1);</textarea></div>
 ```
 
-The `.tryit` editor only runs HTML and JavaScript (in a sandboxed frame). For
-other languages use plain code blocks.
+Syntax colours exist for `language-csharp` and `language-js`. Other code stays plain.
 
 ## Moodle links
 
@@ -79,15 +79,12 @@ assignments in a new tab.
 
 ## Branding
 
-- **Colours:** edit the values marked `BRAND` at the top of `assets/css/style.css`.
-- **Logo:** replace `assets/img/logo.svg` (keep the file name). The header is dark, so use the reversed/white logo.
+The design follows the 2025 Keuda brand book.
+
+- **Colours:** the tokens at the top of `assets/css/style.css` (green `#009700`, black `#00232B`, site background `#FFFFFA`, text boxes `#F1F3F3` `#F4FBF6` `#FFF4FA` `#FFF7EB`). Small text uses the darker link green `#007400`, as the brand book requires for accessibility.
+- **Font:** Titillium Web. Add the font files to `assets/fonts/` (see the README.txt there). Until then the site shows Arial, the brand book's fallback.
+- **Logo:** `assets/img/logo.svg` and `logo-negative.svg` were traced from the brand book PDF. Replace them with the official files from Keuda's media library (keep the file names).
 - **Language:** `lang: "fi"` in `nav.js` switches the interface text. Add more languages in the `strings` block.
-
-## Syntax highlighting (optional)
-
-Code blocks are plain by default. If you add highlight.js (self-hosted files or
-a CDN `<script>` plus a theme stylesheet) to a page, `site.js` highlights every
-`<pre><code>` automatically.
 
 ## Publish on GitHub Pages
 

@@ -94,16 +94,17 @@
       header.appendChild(menuBtn);
     }
 
-    var brand = h("a", { "class": "brand", href: ROOT + "index.html" }, [
-      h("img", { src: ROOT + "assets/img/logo.svg", alt: S.org }),
-      h("span", { "class": "brand-name", text: S.name })
+    // The brand book requires clear space around the logo, so nothing sits next to it.
+    var brand = h("a", { "class": "brand", href: ROOT + "index.html", "aria-label": S.org + " / " + T.home }, [
+      h("img", { "class": "logo-light", src: ROOT + "assets/img/logo.svg", alt: "" }),
+      h("img", { "class": "logo-dark", src: ROOT + "assets/img/logo-negative.svg", alt: "" })
     ]);
     header.appendChild(brand);
 
     var tabs = h("nav", { "class": "course-tabs", "aria-label": T.courseNav });
     S.courses.forEach(function (c) {
       tabs.appendChild(h("a", {
-        href: courseUrl(c), text: c.title,
+        href: courseUrl(c), text: c.title, "data-course": c.color || "green",
         "aria-current": c === course ? "true" : false
       }));
     });
@@ -224,7 +225,7 @@
       c.sections.forEach(function (s) {
         ul.appendChild(h("li", {}, [link(sectionUrl(c, s), s.title)]));
       });
-      wrap.appendChild(h("article", { "class": "card" }, [
+      wrap.appendChild(h("article", { "class": "card", "data-course": c.color || "green" }, [
         h("h2", { text: c.title }),
         h("p", { text: c.description }),
         ul,
@@ -251,22 +252,76 @@
     }
     var ul = h("ul", { "class": "toc-list" });
     pages.forEach(function (p) {
-      ul.appendChild(h("li", {}, [link(pageUrl(course, section, p), p.title)]));
+      ul.appendChild(h("li", {}, [
+        link(pageUrl(course, section, p), p.title),
+        p.desc ? h("span", { "class": "desc", text: p.desc }) : null
+      ]));
     });
     target.appendChild(ul);
   }
 
   /* ── code blocks ─────────────────────────────────────────────────────── */
+  function set(words) {
+    var o = {};
+    words.split(" ").forEach(function (w) { o[w] = true; });
+    return o;
+  }
+
+  var LANGS = {
+    csharp: {
+      kw: set("using namespace class static if else while for foreach break continue return new true false null out var public private internal in do switch case default this readonly const"),
+      ty: set("int string float double char bool void object decimal long List Console Convert Math Program String")
+    },
+    js: {
+      kw: set("let const var function if else for while do return true false null undefined new class break continue of in typeof switch case default this async await import export"),
+      ty: set("console document window Math Array Object String Number JSON")
+    }
+  };
+
+  function esc(t) {
+    return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // Tiny highlighter: comments, strings, numbers, keywords and types.
+  function highlight(src, lang) {
+    var L = LANGS[lang];
+    if (!L) return null;
+    var re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\d+(?:\.\d+)?[fFdDmM]?)|([\p{L}_][\p{L}\p{N}_]*)/gu;
+    var out = "", last = 0, m;
+    while ((m = re.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      last = re.lastIndex;
+      var t = m[0];
+      if (m[1]) out += '<span class="tk-c">' + esc(t) + "</span>";
+      else if (m[2]) out += '<span class="tk-s">' + esc(t) + "</span>";
+      else if (m[3]) out += '<span class="tk-n">' + esc(t) + "</span>";
+      else if (L.kw[t]) out += '<span class="tk-k">' + t + "</span>";
+      else if (L.ty[t]) out += '<span class="tk-t">' + t + "</span>";
+      else out += esc(t);
+    }
+    return out + esc(src.slice(last));
+  }
+
   function enhanceCodeBlocks() {
     Array.prototype.forEach.call(main.querySelectorAll("pre"), function (pre) {
       if (pre.closest(".tryit") || pre.closest(".codeblock")) return;
 
-      var wrap = h("div", { "class": "codeblock" });
+      var isOutput = pre.classList.contains("output");
+      var wrap = h("div", { "class": "codeblock" + (isOutput ? " output" : "") });
       pre.parentNode.insertBefore(wrap, pre);
 
       var title = pre.getAttribute("data-title");
       if (title) wrap.appendChild(h("div", { "class": "codeblock-title", text: title }));
       wrap.appendChild(pre);
+
+      var code = pre.querySelector("code");
+      if (code) {
+        var lang = (code.className.match(/language-(\w+)/) || [])[1];
+        var html = lang ? highlight(code.textContent, lang) : null;
+        if (html !== null) code.innerHTML = html;
+      }
+
+      if (isOutput) return;
 
       var btn = h("button", { type: "button", "class": "copy-btn", text: T.copy });
       btn.addEventListener("click", function () {
@@ -279,11 +334,31 @@
         } catch (e) { /* clipboard unavailable (e.g. insecure context) */ }
       });
       wrap.appendChild(btn);
-
-      // Optional syntax highlighting: works if highlight.js is loaded on the page.
-      var code = pre.querySelector("code");
-      if (code && window.hljs) window.hljs.highlightElement(code);
     });
+  }
+
+  /* ── on-page contents (pages marked with data-toc) ───────────────────── */
+  function buildPageToc() {
+    var heads = Array.prototype.filter.call(main.querySelectorAll("h2"), function (hd) {
+      return !hd.closest(".callout");
+    });
+    if (heads.length < 2) return null;
+
+    var used = {};
+    var ul = h("ul");
+    heads.forEach(function (hd) {
+      if (!hd.id) {
+        var base = hd.textContent.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "") || "osio";
+        var id = base, n = 2;
+        while (used[id] || document.getElementById(id)) id = base + "-" + n++;
+        hd.id = id;
+      }
+      used[hd.id] = true;
+      ul.appendChild(h("li", {}, [link("#" + hd.id, hd.textContent)]));
+    });
+    return h("nav", { "class": "page-toc", "aria-label": T.onThisPage }, [
+      h("strong", { text: T.onThisPage }), ul
+    ]);
   }
 
   /* ── try-it editor ───────────────────────────────────────────────────── */
@@ -360,6 +435,7 @@
   layout.appendChild(main);
   main.classList.add("content");
   main.setAttribute("id", "content");
+  document.body.setAttribute("data-course", (course && course.color) || "green");
 
   Array.prototype.forEach.call(main.querySelectorAll("[data-course-cards]"), renderCards);
   Array.prototype.forEach.call(main.querySelectorAll("[data-course-overview]"), renderCourseOverview);
@@ -369,6 +445,12 @@
     main.insertBefore(buildBreadcrumb(), main.firstChild);
     var pager = buildPager();
     if (pager) main.appendChild(pager);
+  }
+
+  if (main.hasAttribute("data-toc")) {
+    var toc = buildPageToc();
+    var anchor = main.querySelector(".lead") || main.querySelector("h1");
+    if (toc && anchor) anchor.parentNode.insertBefore(toc, anchor.nextSibling);
   }
 
   enhanceCodeBlocks();

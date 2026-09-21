@@ -4,6 +4,9 @@
    The sidebar, course tabs, home page cards, breadcrumbs and
    previous/next buttons are all generated from this file.
 
+   Optional per course: color ("green", "purple", "orange"), moodleUrl.
+   Optional per page:   desc (one line shown in the section's contents list).
+
    To add a page:
      1. Copy _template/page.html into the section's folder.
      2. Add { file: "my-page.html", title: "My page" } to that section's
@@ -21,6 +24,7 @@ window.SITE = {
   courses: [
     {
       id: "ohjelmointi-1",          // folder name
+      color: "green",               // "green" | "purple" | "orange": section colour from the Keuda palette
       title: "Ohjelmointi #1",
       description: "Ohjelmoinnin peruskäsitteet, olio-ohjelmointi, JavaScript ja pelinohjelmointi.",
       moodleUrl: "",                // link to this course's assignments in Moodle
@@ -28,11 +32,22 @@ window.SITE = {
         {
           id: "ohjelmoinnin-perusteet",
           title: "Ohjelmoinnin perusteet",
-          description: "Muuttujat, ehtolauseet, silmukat ja funktiot: ohjelmoinnin peruskäsitteet.",
+          description: "Ohjelmoinnin peruskäsitteet C#-kielellä: muuttujat, ehtolauseet, silmukat, taulukot ja listat.",
           moodleUrl: "",            // optional: link to this section's assignments in Moodle
           pages: [
             { file: "index.html", title: "Yleiskatsaus" },
-            { file: "muuttujat.html", title: "Muuttujat" }
+            { file: "osa-1-ensimmainen-ohjelma.html", title: "Osa 1: Ensimmäinen ohjelma",
+              desc: "Koodin rakenne, ohjelman kirjoittaminen ja käynnistäminen." },
+            { file: "osa-2-muuttujat-ja-tietotyypit.html", title: "Osa 2: Muuttujat ja tietotyypit",
+              desc: "Tietotyypit, muuttujat, Console-luokka ja peruslaskutoimitukset." },
+            { file: "osa-3-tyyppimuunnokset-ja-syote.html", title: "Osa 3: Tyyppimuunnokset ja käyttäjän syöte",
+              desc: "ToString, Convert, Parse ja TryParse sekä syötteen tarkistaminen." },
+            { file: "osa-4-ehtolauseen-operaattorit.html", title: "Osa 4: Ehtolauseen operaattorit",
+              desc: "Vertailuoperaattorit sekä JA- ja TAI-ehdot." },
+            { file: "osa-5-ikuinen-silmukka.html", title: "Osa 5: Ikuinen silmukka",
+              desc: "while (true) ja silmukasta poistuminen break-komennolla." },
+            { file: "osa-6-taulukot-ja-listat.html", title: "Osa 6: Taulukot ja listat",
+              desc: "Array-taulukot ja List-kokoelmat." }
           ]
         },
         {
@@ -63,6 +78,7 @@ window.SITE = {
     },
     {
       id: "ohjelmointi-2",
+      color: "purple",
       title: "Ohjelmointi #2",
       description: "Ohjelmistoprojektin työkalut: versionhallinta, ketterä kehitys ja tuotantoputki.",
       moodleUrl: "",
@@ -118,6 +134,7 @@ window.SITE = {
       copied: "Kopioitu",
       comingSoon: "Sisältö tulossa.",
       contents: "Sisältö",
+      onThisPage: "Tällä sivulla",
       edit: "Muokkaa tätä sivua"
     },
     en: {
@@ -141,6 +158,7 @@ window.SITE = {
       copied: "Copied",
       comingSoon: "Content coming soon.",
       contents: "Contents",
+      onThisPage: "On this page",
       edit: "Edit this page"
     }
   }

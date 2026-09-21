@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osa 2: Muuttujat ja tietotyypit | Ohjelmoinnin perusteet | Keuda</title>
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <main id="content" data-toc>
+    <h1>Osa 2: Muuttujat ja tietotyypit</h1>
+    <p class="lead">Opit tallentamaan tietoa muuttujiin, tulostamaan sitä konsoliin ja tekemään sillä laskutoimituksia.</p>
+
+    <h2>Tietotyypit</h2>
+    <p>Tietotyyppi kertoo, miten tieto tulkitaan. Tietokoneen muisti koostuu järjestyksessä olevista biteistä, ja niiden tulkinta on vapaa. Sama osa muistin sisältöä voidaan tulkita esimerkiksi merkiksi, kokonaisluvuksi, liukuluvuksi tai osoitteeksi toiseen muistipaikkaan. Tietotyypit kertovat ohjelmille ja ohjelmoijille, miten nämä bitit tulkitaan.</p>
+
+    <h3>Yleisimmät tietotyypit C#:ssa</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tyyppi</th><th>Kuvaus</th><th>Esimerkki</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>string</code></td>
+            <td>Merkkijono eli teksti. Kirjoitetaan C#:ssa lainausmerkkien sisään.</td>
+            <td><code>"Hello World"</code></td>
+          </tr>
+          <tr>
+            <td><code>int</code></td>
+            <td>Kokonaisluku (integer). Arvo voi olla väliltä -2 147 483 648 ... 2 147 483 647.</td>
+            <td><code>42</code></td>
+          </tr>
+          <tr>
+            <td><code>float</code></td>
+            <td>Reaaliluku, jolla käsitellään desimaaleja. Lopussa on pieni <code>f</code>-kirjain. Arvo voi olla väliltä -3,402823 × 10<sup>38</sup> ... 3,402823 × 10<sup>38</sup>.</td>
+            <td><code>10.25f</code></td>
+          </tr>
+          <tr>
+            <td><code>double</code></td>
+            <td>Reaaliluku kuten <code>float</code>, mutta suuremmille desimaaliarvoille. Arvo voi olla väliltä -1,79769313486232 × 10<sup>308</sup> ... 1,79769313486232 × 10<sup>308</sup>.</td>
+            <td><code>3.1415926535</code></td>
+          </tr>
+          <tr>
+            <td><code>char</code></td>
+            <td>Yksittäinen Unicode-merkki (character). Kirjoitetaan yksittäisten lainausmerkkien sisään.</td>
+            <td><code>'a'</code>, <code>'2'</code>, <code>'-'</code></td>
+          </tr>
+          <tr>
+            <td><code>bool</code></td>
+            <td>Totuusarvo (boolean). Arvo on joko <code>true</code> (tosi) tai <code>false</code> (epätosi). Käytetään ehtolausekkeissa, jotka käsitellään myöhemmissä osissa.</td>
+            <td><code>true</code>, <code>false</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Muuttujat</h2>
+    <p><strong>Muuttuja</strong> on muistipaikka, jossa ohjelma voi säilyttää tarvitsemaansa tietoa.</p>
+    <ul>
+      <li><strong>Nimi</strong> on tunnus, jolla muuttujaan viitataan ohjelmassa. Nimessä voi olla kirjaimia ja numeroita, mutta nimi ei saa alkaa numerolla.</li>
+      <li><strong>Tietotyyppi</strong> kertoo, millaista tietoa muuttujaan voi tallentaa.</li>
+      <li><strong>Arvo</strong> on muuttujaan tallennettu data, jonka pitää olla tietotyypin mukainen.</li>
+    </ul>
+    <p>Muuttujan tietotyyppiä ei voi muuttaa sovelluksen ajon aikana, mutta arvoa voi.</p>
+
+    <h3>Muuttujan kirjoittaminen</h3>
+    <pre><code class="language-csharp">string etunimi = "Pekka";</code></pre>
+    <ol>
+      <li>Muuttujalle annetaan ensin <strong>tietotyyppi</strong> (<code>string</code>).</li>
+      <li>Muuttujalle annetaan <strong>nimi</strong>. Muuttujien nimet kannattaa aina kirjoittaa pienellä alkukirjaimella. Nimeä käytetään, kun muuttujan arvoa halutaan käyttää, esimerkiksi tulostettaessa konsoliin.</li>
+      <li>Lopuksi muuttujalle annetaan <strong>arvo</strong>. Nimen ja arvon väliin tulee <code>=</code>-merkki. Arvo on se data, jota muuttuja pitää sisällään.</li>
+      <li>Lopuksi muista laittaa puolipiste <code>;</code>.</li>
+    </ol>
+
+    <h3>Muita esimerkkejä</h3>
+    <p>Sama rakenne toimii kaikille edellä käydyille tietotyypeille:</p>
+    <pre><code class="language-csharp">int ikä = 18;
+float pituus = 180.5f;
+double pii = 3.1415926535;
+char merkki = 'e';
+bool olenkoAktiivinen = true;</code></pre>
+
+    <h2>Muuttujien käyttäminen</h2>
+    <p>Muuttujia voi käyttää missä tahansa logiikassa, esimerkiksi tekstin tulostamisessa konsoliin tai laskujen tekemisessä. Muuttujaa käytetään kutsumalla sen nimeä. Tämän voi tehdä esimerkiksi <code>Console.WriteLine</code>-toiminnolla:</p>
+
+    <pre><code class="language-csharp">string helloWorld = "Hello World!";
+
+Console.WriteLine(helloWorld);</code></pre>
+    <pre class="output" data-title="Konsoli"><code>Hello World!</code></pre>
+
+    <h3>Console-luokan Write-toiminnot</h3>
+    <p><code>Console</code>-luokassa on kaksi tulostustoimintoa:</p>
+    <ul>
+      <li><code>Console.WriteLine(string);</code> tulostaa sulkujen sisään antamasi syötteen. Seuraava tulostettava asia tulee seuraavalle riville.</li>
+      <li><code>Console.Write(string);</code> ei sisällä rivinvaihtoa. Seuraava tuloste tulostuu samalle riville kuin edellinen.</li>
+    </ul>
+    <p><code>WriteLine</code>-metodi eli toiminto ottaa parametriksi <code>string</code>-tyyppisen arvon. Sen sisälle voi kirjoittaa suoraan tekstiä, esimerkiksi <code>Console.WriteLine("Hello World");</code>, tai käyttää muuttujaa, kuten yllä <code>Console.WriteLine(helloWorld);</code>.</p>
+    <p><strong>Parametri</strong> on metodille (toiminnolle, funktiolle) annettava alkuarvo, jonka perusteella se saa aikaan jonkin tuloksen. Tässä esimerkissä tulos on se, että konsoliin kirjoitetaan viesti.</p>
+
+    <h3>Usean arvon yhdistäminen</h3>
+    <p><code>Console.WriteLine</code>- ja <code>Console.Write</code>-toimintojen sisällä voi olla useita <code>string</code>-arvoja, jotka erotetaan <code>+</code>-merkillä:</p>
+
+    <pre><code class="language-csharp">string hello = "Hello";
+string world = "World";
+
+Console.WriteLine(hello + world + "!");</code></pre>
+    <pre class="output" data-title="Konsoli"><code>HelloWorld!</code></pre>
+
+    <p>Huomataan, että "Hello" ja "World" väliltä puuttuu välilyönti. Se korjataan lisäämällä muuttujien väliin tyhjä välilyönti merkkijonona:</p>
+
+    <pre><code class="language-csharp">Console.WriteLine(hello + " " + world + "!");</code></pre>
+    <pre class="output" data-title="Konsoli"><code>Hello World!</code></pre>
+
+    <h3>String- ja int-muuttujien yhdistäminen</h3>
+    <p>Kaikki muuttujatyypit voi yhdistää merkkijonoksi <code>Console.WriteLine</code>-toiminnon sisällä. Ne täytyy vain erottaa <code>+</code>-merkillä:</p>
+
+    <pre><code class="language-csharp">string nimi = "Pekka";
+int ikä = 18;
+
+Console.WriteLine("Hei! Olen " + nimi + " ja olen " + ikä + "v");</code></pre>
+    <pre class="output" data-title="Konsoli"><code>Hei! Olen Pekka ja olen 18v</code></pre>
+
+    <h3>Console.Write ja Console.WriteLine</h3>
+    <p><code>Console.Write</code> lisää tekstin konsoliin ilman uuden rivin lisäystä eli teksti lisätään suoraan edellisen viestin perään. <code>Console.WriteLine</code> lisää tekstin loppuun rivinvaihdon (line terminator, newline), jolloin seuraava viesti kirjoitetaan aina omalle rivilleen.</p>
+
+    <pre><code class="language-csharp">Console.WriteLine("WriteLine. (Rivin loppu)");
+Console.Write("Write.");
+Console.Write("Write.");
+Console.WriteLine("WriteLine.(Rivin loppu)");
+Console.Write("Write.");</code></pre>
+    <pre class="output" data-title="Konsoli"><code>WriteLine. (Rivin loppu)
+Write.Write.WriteLine.(Rivin loppu)
+Write.</code></pre>
+
+    <h3>Rivinvaihto: \n</h3>
+    <p>Toinen tapa saada "tyhjä" rivi tai rivinvaihto tulosteeseen on käyttää <strong>newline</strong>-koodia merkkijonon sisällä. Se on yleinen tapa lisätä tekstiin uusi rivi lähes kaikissa ohjelmointikielissä. Newline lisätään tekstiin merkinnällä <code>\n</code> suoraan <code>string</code>-merkkijonon sisään, esimerkiksi tekstin alkuun, loppuun tai keskelle:</p>
+
+    <pre><code class="language-csharp">Console.WriteLine("Ensimmäinen rivi\nToinen rivi");</code></pre>
+    <pre class="output" data-title="Konsoli"><code>Ensimmäinen rivi
+Toinen rivi</code></pre>
+
+    <h2>Muuttujien muokkaaminen ja peruslaskutoimitukset</h2>
+    <p>Muuttujilla voi tehdä peruslaskutoimituksia, ja niitä voi yhdistää toisten muuttujien arvoiksi.</p>
+
+    <h3>Muuttujan arvon muokkaaminen</h3>
+    <p>Muuttujien arvoja voi muokata sovelluksen ajon aikana. Voit vaihtaa muuttujan arvoksi jonkin toisen, yhdistää muuttujia yhteen tai käyttää muuttujiin peruslaskutoimituksia, esimerkiksi laskea kaksi <code>int</code>-arvoa yhteen.</p>
+    <p>Alla luodaan ensin <code>string</code>-muuttuja <code>nimi</code>, jolle annetaan arvoksi "Pekka", ja nimi tulostetaan konsoliin. Tulostuksen jälkeen muokataan jo olemassa olevaa muuttujaa ja annetaan sille uusi arvo "Jukka".</p>
+
+    <pre><code class="language-csharp">string nimi = "Pekka";
+
+Console.WriteLine(nimi);
+
+nimi = "Jukka";
+
+Console.WriteLine(nimi);</code></pre>
+    <pre class="output" data-title="Konsoli"><code>Pekka
+Jukka</code></pre>
+    <p>Konsoliin tulostuu kaksi nimeä. Ne ovat saman muuttujan arvoja, joista jälkimmäinen on muokattu sovelluksen ajon aikana.</p>
+
+    <div class="callout note">
+      <strong class="callout-title">Tietotyyppiä ei kirjoiteta uudelleen</strong>
+      <p>Kun muuttujan arvoa muokataan, tietotyyppiä ei enää kirjoiteta. Tietotyyppi annetaan vain silloin, kun muuttuja luodaan.</p>
+    </div>
+
+    <h3>Muuttujien yhdistäminen</h3>
+    <p>Useita muuttujia voi yhdistää uudeksi muuttujaksi:</p>
+
+    <pre><code class="language-csharp">string etunimi = "Pekka";
+string sukunimi = "Virtanen";
+
+string kokonimi = etunimi + " " + sukunimi;
+
+Console.WriteLine(kokonimi);</code></pre>
+    <pre class="output" data-title="Konsoli"><code>Pekka Virtanen</code></pre>
+
+    <h3>Peruslaskutoimitukset</h3>
+    <p><code>int</code>-, <code>float</code>- ja muille numeerisille muuttujille voi suorittaa erilaisia laskutoimituksia. Niihin käytetään <strong>operaattoreita</strong>, jotka ovat merkkejä eri laskemis- ja yhdistämistoiminnoissa. Yksi niistä on aiemmin käytetty <code>+</code>-merkki, jolla yhdistettiin merkkijonoja.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Operaattori</th><th>Toiminto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>+</code></td><td>Summa</td></tr>
+          <tr><td><code>-</code></td><td>Erotus</td></tr>
+          <tr><td><code>*</code></td><td>Kertolasku</td></tr>
+          <tr><td><code>/</code></td><td>Jakolasku</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Esimerkkejä eri laskutoimituksista <code>int</code>-muuttujilla:</p>
+    <pre><code class="language-csharp">int a = 10;              // Määritetään integer a -muuttuja
+int b = 5;               // Määritetään integer b -muuttuja
+
+int summa = a + b;       // a ja b summa -> 10 + 5 = 15
+int erotus = a - b;      // a ja b erotus -> 10 - 5 = 5
+int kertolasku = a * b;  // a ja b kertolasku -> 10 * 5 = 50
+int jakolasku = a / b;   // a ja b jakolasku -> 10 / 5 = 2</code></pre>
+
+    <h2>Harjoitukset</h2>
+    <div class="callout task">
+      <strong class="callout-title">Harjoitukset Moodlessa</strong>
+      <p>Tämän osan harjoitukset tehdään ja palautetaan Moodlessa.</p>
+    </div>
+  </main>
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

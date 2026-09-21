@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osa 1: Ensimmäinen ohjelma | Ohjelmoinnin perusteet | Keuda</title>
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <main id="content" data-toc>
+    <h1>Osa 1: Ensimmäinen ohjelma</h1>
+    <p class="lead">Tutustut C#-koodin rakenteeseen, kirjoitat ensimmäisen rivisi ja käynnistät sovelluksen Visual Studiossa.</p>
+
+    <h2>Koodin rakenne</h2>
+    <p>C#-koodi ja lähes kaikkien muiden ohjelmointikielten koodi kirjoitetaan aina <strong>lohkojen</strong> sisälle. Käytännössä luokat ja toiminnot laitetaan aaltosulkujen <code>{ }</code> sisään.</p>
+    <p>Aaltosulut saat näppäinyhdistelmillä <code>Alt Gr + 7</code> (aloitussulku <code>{</code>) ja <code>Alt Gr + 0</code> (lopetussulku <code>}</code>). Visual Studio lisää yleensä lopetussulun automaattisesti.</p>
+    <p>C#-sovellukset hyödyntävät <strong>nimiavaruuksia</strong>. Nimiavaruus on kokoelma kirjastoja ja luokkia. <strong>Kirjasto</strong> on kokoelma valmiita luokkia ja metodeja, joita voit kutsua omassa koodissasi.</p>
+
+    <h3>Tyhjä konsolisovellus</h3>
+    <p>Kun luot Visual Studiossa uuden konsolisovelluksen, projekti sisältää valmiiksi tämän rungon. Kommentit (<code>//</code>) kertovat, mitä kukin osa tekee.</p>
+
+    <pre data-title="Program.cs"><code class="language-csharp">// Tämä kertoo, että tässä ohjelmassa käytetään nimiavaruutta System
+// Joka antaa meidän käyttää oleellisia toimintoja
+using System;
+
+// Tämä määrittelee nimiavaruuden sovellukselle "ConsoleApp1"
+// Jos haluamme käyttää tätä sovellusta toisessa sovelluksessa,
+// tulee toiseen sovellukseen lisätä "using ConsoleApp1"
+namespace ConsoleApp1
+{
+    // Tämä määrittelee luokan Program, joka on pääsovelluksemme luokka
+    class Program
+    {
+        // Tämä määrittelee metodin Main
+        // Se on toiminto, jota kutsutaan aina kun sovellus käynnistetään
+        static void Main(string[] args)
+        {
+            // Tällä kutsumme Console-luokan WriteLine-toimintoa,
+            // jolla voidaan kirjoittaa konsoliin teksti "Hello World!"
+            Console.WriteLine("Hello World!");
+        }
+    }
+}</code></pre>
+
+    <h3>Kolme lohkoa</h3>
+    <p>Esimerkissä on kolme erillistä lohkoa. Huomaa, että jokaisella lohkolla on aina aloitus <code>{</code> ja lopetus <code>}</code>, ja ne ovat eri kohdissa koodia.</p>
+    <ol>
+      <li><strong>namespace ConsoleApp1 -lohko.</strong> Määrittää ohjelmalle oman nimiavaruuden.</li>
+      <li><strong>class Program -lohko.</strong> Sen sisälle lisätään kaikki ohjelman muuttujat ja toiminnot.</li>
+      <li><strong>static void Main -lohko.</strong> Sen sisälle kirjoitetaan koodin logiikka eli se, mitä halutaan tapahtuvan. Main-toiminto käydään läpi automaattisesti, kun sovellus käynnistetään.</li>
+    </ol>
+
+    <h3>Jokaisen rivin tarkoitus</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Koodi</th><th>Tarkoitus</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>using System;</code></td><td>Kertoo, että ohjelmassa käytetään nimiavaruutta <code>System</code>.</td></tr>
+          <tr><td><code>namespace ConsoleApp1</code></td><td>Määrittelee nimiavaruuden <code>ConsoleApp1</code>.</td></tr>
+          <tr><td><code>{</code></td><td>Aloittaa koodilohkon edellä esitellylle nimiavaruudelle, luokalle tai metodille.</td></tr>
+          <tr><td><code>class Program</code></td><td>Määrittelee luokan <code>Program</code>.</td></tr>
+          <tr><td><code>static void Main(string[] args)</code></td><td>Määrittelee metodin <code>Main</code>. Ohjelman aloituspiste on aina staattinen <code>Main</code>-niminen metodi.</td></tr>
+          <tr><td><code>Console.WriteLine("Hello World!");</code></td><td>Kutsuu <code>Console</code>-luokan metodia <code>WriteLine</code>, joka tulostaa tekstiä komentoriville. Metodille annetaan parametriksi merkkijono <code>"Hello World!"</code>.</td></tr>
+          <tr><td><code>}</code></td><td>Lopettaa koodilohkon (metodin, luokan tai nimiavaruuden).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Koodin kirjoittaminen</h2>
+    <p>Aloitetaan käynnistämällä valmis Hello World -pohja, joka luodaan automaattisesti uusiin projekteihin. Keskitymme pelkästään <code>Main</code>-lohkon sisälle, johon koodi ja logiikka kirjoitetaan.</p>
+
+    <pre data-title="Main-lohko"><code class="language-csharp">static void Main(string[] args)
+{
+    Console.WriteLine("Hello World!");
+}</code></pre>
+
+    <h3>Puolipiste lopettaa rivin</h3>
+    <p>Kaikki koodi, joka ei ole lohkomuodossa (eli aaltosulkujen sisällä), lopetetaan aina puolipisteeseen <code>;</code> (<code>Shift + pilkku</code>). Puolipiste tulee siis aina yksittäisen koodirivin loppuun. Esimerkiksi <code>Console.WriteLine("Hello World!");</code> päättyy puolipisteeseen.</p>
+    <p>Kun ohjelma ajetaan, puolipiste kertoo, että tämän koodirivin päätös on tässä. Sen jälkeen jatketaan seuraavalle koodiriville.</p>
+
+    <h3>Sovelluksen käynnistäminen</h3>
+    <p>Sovellus käynnistetään Visual Studion yläpalkista: vihreästä <strong>Start</strong>-nuolesta, jossa lukee sovelluksen nimi. Jos annoit sovellukselle jonkin muun nimen, <code>ConsoleApp1</code>-tekstin tilalla on sinun antamasi nimi.</p>
+
+    <figure>
+      <img src="../../assets/img/ohjelmoinnin-perusteet/vs-kaynnista.png" width="1024" height="87"
+           alt="Visual Studion yläpalkki, jossa vihreä Start-nuoli ja sovelluksen nimi ConsoleApp1 on rajattu punaisella soikiolla">
+      <figcaption>Käynnistyspainike Visual Studion yläpalkissa.</figcaption>
+    </figure>
+
+    <p>Kun painat käynnistyspainiketta, Visual Studio kokoaa sovelluksen ajettavaksi (Compile) ja avaa konsoli-ikkunan, jonka ensimmäisellä rivillä lukee "Hello World!".</p>
+
+    <pre class="output" data-title="Konsoli"><code>Hello World!</code></pre>
+
+    <h3>Muokkaus</h3>
+    <p>Muokataan "Hello World!" -tekstin tilalle jokin toinen teksti, esimerkiksi "Olen paras koodari!". Teksti kirjoitetaan <code>Console</code>-luokan <code>WriteLine</code>-toiminnon sisälle. <code>WriteLine</code> kirjoittaa annetun tekstin eli merkkijonon konsoliin.</p>
+
+    <pre><code class="language-csharp">static void Main(string[] args)
+{
+    Console.WriteLine("Olen paras koodari!");
+}</code></pre>
+
+    <div class="callout note">
+      <strong class="callout-title">Merkkijono kirjoitetaan lainausmerkkien sisään</strong>
+      <p>Merkkijono on tietotyyppiä <code>string</code>, jota käsitellään seuraavassa osassa. Aina kun kirjoitat merkkijonon, laita se lainausmerkkien sisään, esimerkiksi <code>"teksti"</code>.</p>
+    </div>
+
+    <p>Käynnistä sovellus uudelleen, niin näet muutoksen konsoli-ikkunassa:</p>
+
+    <pre class="output" data-title="Konsoli"><code>Olen paras koodari!</code></pre>
+
+    <h2>Harjoitukset</h2>
+    <div class="callout task">
+      <strong class="callout-title">Harjoitukset Moodlessa</strong>
+      <p>Tämän osan harjoitukset tehdään ja palautetaan Moodlessa.</p>
+    </div>
+  </main>
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

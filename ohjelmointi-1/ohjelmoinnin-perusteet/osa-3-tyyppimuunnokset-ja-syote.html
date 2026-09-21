@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osa 3: Tyyppimuunnokset ja käyttäjän syöte | Ohjelmoinnin perusteet | Keuda</title>
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <main id="content" data-toc>
+    <h1>Osa 3: Tyyppimuunnokset ja käyttäjän syöte</h1>
+    <p class="lead">Opit muuttamaan arvon tietotyypistä toiseen ja tarkistamaan, onko käyttäjän antama syöte sitä mitä odotit.</p>
+
+    <h2>Muita muunnostoimintoja</h2>
+
+    <h3>ToString()</h3>
+    <p><code>.ToString()</code>-toiminnolla muutetaan jokin tyyppi <code>string</code>-tyypiksi. Se onnistuu lähes kaikkien tietotyyppien kanssa.</p>
+    <p>Aiemmin mainittu sulkuoperaattori ei aina toimi, kun tyyppi halutaan muuttaa <code>string</code>-tyypiksi. Alla oleva koodi ei esimerkiksi onnistu:</p>
+
+    <pre><code class="language-csharp">int a = 10;
+
+string merkkijono = (string)a;   // Ei toimi: koodi ei käänny</code></pre>
+
+    <p>Käytä sen sijaan <code>.ToString()</code>-toimintoa, joka lisätään muuttujan nimen perään: <code>a.ToString()</code>.</p>
+
+    <div class="callout note">
+      <strong class="callout-title">Huomaa piste</strong>
+      <p>Muuttujan nimen ja <code>ToString()</code>-toiminnon välissä on piste.</p>
+    </div>
+
+    <pre><code class="language-csharp">int a = 10;
+
+string merkkijono = a.ToString();</code></pre>
+
+    <h3>Convert</h3>
+    <p><code>Convert.ToXXX</code>-toiminnolla voidaan muuttaa perustietotyyppejä toiseksi tietotyypiksi. Esimerkiksi <code>a</code> voidaan muuttaa merkkijonoksi näin:</p>
+
+    <pre><code class="language-csharp">int a = 10;
+
+string merkkijono = Convert.ToString(a);</code></pre>
+
+    <p>Toiseen suuntaan, merkkijonosta kokonaisluvuksi:</p>
+
+    <pre><code class="language-csharp">string merkkijono = "123";
+int luku = Convert.ToInt32(merkkijono);</code></pre>
+
+    <p>Muunnos merkkijonosta kokonaisluvuksi onnistuu <strong>vain</strong>, jos merkkijonon arvo on oikeasti luku. Jos <code>merkkijono</code>-muuttujan arvo olisi esimerkiksi <code>"123 a"</code>, muunnos ei onnistuisi ja konsoliin tulisi virheilmoitus:</p>
+
+    <pre><code class="language-csharp">string merkkijono = "123 a";
+int luku = Convert.ToInt32(merkkijono);</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Unhandled Exception: System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(...)
+   at System.Convert.ToInt32(String value)
+   ...</code></pre>
+
+    <h3>Parse-metodi</h3>
+    <p>Tyyppien <code>Parse</code>- ja <code>TryParse</code>-metodeilla luetaan arvo merkkijonosta. Ero on se, että <code>Parse</code> aiheuttaa virheen, jos merkkijono ei ole sopivassa muodossa. <code>TryParse</code> käsitellään tämän osan seuraavassa jaksossa.</p>
+
+    <pre><code class="language-csharp">string merkkijono = "123,45";
+float luku = float.Parse(merkkijono);
+Console.WriteLine(luku);</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>123,45</code></pre>
+
+    <div class="callout warning">
+      <strong class="callout-title">Desimaalierotin</strong>
+      <p>Merkkijonosta luettaessa desimaalierottimena käytetään oletuksena järjestelmässä määriteltyä erotinta. Yllä olevassa esimerkissä erotin on <strong>pilkku</strong>, ei piste. Konsolissa desimaalierotin näkyy myös pilkkuna.</p>
+      <p>Kun <code>float</code>-muuttuja luodaan suoraan koodissa (esimerkiksi <code>float luku = 123.45f;</code>), erottimena käytetään aina pistettä. Mutta jos haluat merkkijonon, jonka arvo on <code>"123,45"</code>, käytä pilkkua.</p>
+    </div>
+
+    <p>Jos merkkijonon arvoksi annettaisiin pilkun sijaan piste, konsoliin tulisi virheilmoitus, kun sovellus ajetaan:</p>
+
+    <pre><code class="language-csharp">string merkkijono = "123.45";
+float luku = float.Parse(merkkijono);
+Console.WriteLine(luku);</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Unhandled Exception: System.FormatException: Input string was not in a correct format.
+   at System.Number.ParseSingle(...)
+   at System.Single.Parse(String s)
+   ...</code></pre>
+
+    <h2>Käyttäjän syötteen tarkistaminen</h2>
+    <p>Ehtolauseilla voidaan tarkistaa myös käyttäjän syöte. Jos käyttäjältä kysytään lukua (<code>int</code>) ja hän kirjoittaakin tekstiä, halutaan tulostaa jokin viesti, esimerkiksi "Virheellinen syöte", sen sijaan että sovellus kaatuu virheeseen.</p>
+    <p>Tähän käytetään toimintoa <code>x.TryParse(string, out t)</code>, jossa <code>x</code> ja <code>t</code> ovat tietotyyppejä. Sana <code>out</code> tarkoittaa, että arvo tallennetaan muuttujaan, jos muunnos onnistuu.</p>
+
+    <div class="callout tip">
+      <strong class="callout-title">Muista tämä</strong>
+      <p>Tätä käytetään jatko-osioissa paljon.</p>
+    </div>
+
+    <pre data-title="Käyttäjän syötteen tarkistaminen"><code class="language-csharp">string syöte;   // string-muuttuja käyttäjän syötettä varten
+
+Console.Write("Anna luku: ");
+syöte = Console.ReadLine();   // kysytään käyttäjältä syötettä
+
+int luku;   // muuttuja sitä varten, jos syöte onkin luku
+
+// Ehtolause toimii näin:
+// 1) int.TryParse -> aloitetaan muunnosprosessi
+// 2) syöte -> ensimmäinen parametri eli string-arvo, joka halutaan muuttaa
+// 3) out -> tallennetaan lopputulos johonkin muuttujaan
+// 4) luku -> muunnos tallennetaan luku-muuttujaan, JOS se onnistuu
+// Eli: jos käyttäjä on antanut kokonaisluvun, muunnos tallennetaan luku-muuttujaan
+if (int.TryParse(syöte, out luku))
+{
+    Console.WriteLine("Syötteeksi annettiin integer luku!");
+}
+// Jos käyttäjä EI ole antanut kokonaislukua, siirrytään else-ehtoon
+else
+{
+    Console.WriteLine("Syötteeksi annettiin jotakin muuta kuin integer..");
+}</code></pre>
+
+    <p>Jos syötteeksi annetaan kokonaisluku:</p>
+    <pre class="output" data-title="Konsoli"><code>Anna luku: 10
+Syötteeksi annettiin integer luku!</code></pre>
+
+    <p>Jos syötteeksi annetaan jotain muuta:</p>
+    <pre class="output" data-title="Konsoli"><code>Anna luku: asd
+Syötteeksi annettiin jotakin muuta kuin integer..</code></pre>
+
+    <h2>Käyttäjän syötteen tarkistaminen silmukan sisällä</h2>
+    <p>Syötteen voi tarkistaa myös silmukan sisällä. Tässä yhdistetään edellisen jakson <code>int.TryParse</code>-toiminto ja <code>while</code>-silmukka.</p>
+    <p>Käyttäjältä kysytään ikää <strong>niin kauan</strong>, kunnes hän syöttää kokonaisluvun eli <code>int</code>-arvon.</p>
+
+    <div class="callout tip">
+      <strong class="callout-title">Tämä kannattaa muistaa</strong>
+      <p>Silmukka, joka kysyy syötettä uudelleen kunnes se on kelvollinen, on yleinen tapa tarkistaa käyttäjän antamat tiedot.</p>
+    </div>
+
+    <pre data-title="Syötteen tarkistus silmukassa"><code class="language-csharp">string syöte;   // muuttuja syötettä varten
+int ikä;        // muuttuja ikää varten
+
+// Ikuinen silmukka
+while (true)
+{
+    // kysytään käyttäjältä ikä
+    Console.Write("Anna ikäsi: ");
+
+    syöte = Console.ReadLine();
+
+    // Tarkistetaan, antoiko käyttäjä syötteeksi PELKÄSTÄÄN kokonaisluvun
+    if (int.TryParse(syöte, out ikä))
+    {
+        // jos antoi, tulostetaan käyttäjän ikä ja poistutaan silmukasta
+        Console.WriteLine("Olet " + ikä + " vuotta vanha!");
+        break;
+    }
+    else
+    {
+        // Jos käyttäjä ei antanut kokonaislukua, kysytään sitä uudestaan
+        Console.WriteLine("Et syöttänyt kokonaislukua.. yritäppä uudelleen");
+        Console.WriteLine();
+    }
+}</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Anna ikäsi: En anna
+Et syöttänyt kokonaislukua.. yritäppä uudelleen
+
+Anna ikäsi: En jaksa
+Et syöttänyt kokonaislukua.. yritäppä uudelleen
+
+Anna ikäsi: Miks..
+Et syöttänyt kokonaislukua.. yritäppä uudelleen
+
+Anna ikäsi: 20
+Olet 20 vuotta vanha!</code></pre>
+
+    <h2>Harjoitukset</h2>
+    <div class="callout task">
+      <strong class="callout-title">Harjoitukset Moodlessa</strong>
+      <p>Tämän osan harjoitukset tehdään ja palautetaan Moodlessa.</p>
+    </div>
+  </main>
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

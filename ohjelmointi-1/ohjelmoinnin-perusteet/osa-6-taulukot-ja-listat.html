@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osa 6: Taulukot ja listat | Ohjelmoinnin perusteet | Keuda</title>
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <main id="content" data-toc>
+    <h1>Osa 6: Taulukot ja listat</h1>
+    <p class="lead">Taulukoihin ja listoihin voi tallentaa useita saman tyyppisiä arvoja yhteen paikkaan.</p>
+
+    <h2>Array-taulukko</h2>
+
+    <h3>Array-taulukon edut</h3>
+    <ul>
+      <li><strong>Käytön helppous:</strong> taulukot mahdollistavat useiden arvojen tallentamisen yhteen paikkaan.</li>
+      <li><strong>Suorituskyky:</strong> taulukot ovat tehokkaita, koska ne tarjoavat suoran pääsyn elementteihin indeksin avulla.</li>
+      <li><strong>Joustavuus:</strong> taulukkojen avulla voit helposti suorittaa toistuvia operaatioita, kuten laskentaa, lajittelua ja etsimistä.</li>
+    </ul>
+
+    <h3>Taulukon määrittely</h3>
+    <pre><code class="language-csharp">int[] numerot = { 1, 2, 3, 4, 5 };</code></pre>
+    <p>Tämä luo kokonaislukutaulukon, joka sisältää viisi elementtiä. Taulukon tyyppi on <code>int[]</code>, mikä tarkoittaa, että se voi sisältää vain kokonaislukuja.</p>
+
+    <h3>Taulukon indeksit</h3>
+    <p>Taulukot aloitetaan aina indeksistä <code>[0]</code>. Indeksissä <code>[0]</code> oleva arvo on siis aina taulukon ensimmäinen. Alla olevassa esimerkissä taulukon indeksissä <code>[0]</code> oleva arvo on 5.</p>
+
+    <pre><code class="language-csharp">// Array-taulukko numeroista
+int[] numeroita = { 5, 20, 12, 2, 1 };
+
+// Tulostetaan konsoliin taulukon numerot, jotka ovat indekseissä [0] ja [2]
+// [0]-indeksissä oleva tulostaa taulukon ensimmäisen numeron
+// [2]-indeksissä oleva tulostaa taulukossa kolmantena olevan numeron
+Console.WriteLine("Numero indeksillä [0] on " + numeroita[0]);
+Console.WriteLine("Numero indeksillä [2] on " + numeroita[2]);</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Numero indeksillä [0] on 5
+Numero indeksillä [2] on 12</code></pre>
+
+    <h2>List-taulukko</h2>
+    <p>Listat ovat erittäin hyödyllisiä tietorakenteita, joiden avulla voidaan tallentaa useita saman tyyppisiä arvoja. Toisin kuin taulukot (array), listat voivat kasvaa ja kutistua tarpeen mukaan. Listojen avulla voimme lisätä, poistaa ja muokata elementtejä helposti.</p>
+    <p>Yksiulotteinen lista on yksinkertainen kokoelma elementtejä, joka voi tallentaa vaikkapa kokonaislukuja, merkkijonoja tai muita arvoja.</p>
+
+    <div class="callout note">
+      <strong class="callout-title">Indeksointi alkaa nollasta</strong>
+      <p>Listan ensimmäinen alkio löytyy indeksistä 0. Vaikka listassa olisi viisi alkiota, niiden indeksit ovat 0, 1, 2, 3 ja 4. Ensimmäinen alkio on siis numerolla 0, toinen numerolla 1, ja niin edelleen.</p>
+    </div>
+
+    <h3>Listan perusrakenne</h3>
+    <p>Yksiulotteisen listan käyttöön tarvitaan yleensä <code>System.Collections.Generic</code>-kirjasto, jonka kautta saamme käyttöön <code>List&lt;T&gt;</code>-tietotyypin.</p>
+
+    <pre><code class="language-csharp">using System.Collections.Generic;
+
+List&lt;int&gt; numerot = new List&lt;int&gt; { 10, 20, 30, 40, 50 };</code></pre>
+
+    <h3>Listan perustoiminnot</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Toiminto</th><th>Tarkoitus</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Add(item)</code></td><td>Lisää uuden alkion listan loppuun.</td></tr>
+          <tr><td><code>Remove(item)</code></td><td>Poistaa ensimmäisen alkion, joka vastaa annettua arvoa.</td></tr>
+          <tr><td><code>RemoveAt(index)</code></td><td>Poistaa alkion tietystä indeksistä.</td></tr>
+          <tr><td><code>Count</code></td><td>Palauttaa listan alkioiden määrän.</td></tr>
+          <tr><td><code>Insert(index, item)</code></td><td>Lisää alkion tiettyyn kohtaan listassa.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Esimerkki: luvut listassa</h3>
+    <pre><code class="language-csharp">List&lt;int&gt; numerot = new List&lt;int&gt; { 10, 20, 30, 40, 50 };
+
+// Käytetään laskuria alkaen 0-indeksistä
+int i = 0;
+while (i &lt; numerot.Count)   // Count kertoo listan alkioiden määrän
+{
+    Console.WriteLine("Indeksi " + i + ": " + numerot[i]);
+    i++;
+}
+
+// Tulostetaan alkioiden määrä
+Console.WriteLine("Listassa on yhteensä " + numerot.Count + " alkiota.");</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Indeksi 0: 10
+Indeksi 1: 20
+Indeksi 2: 30
+Indeksi 3: 40
+Indeksi 4: 50
+Listassa on yhteensä 5 alkiota.</code></pre>
+
+    <h3>Esimerkki: alkioiden lisääminen ja poistaminen</h3>
+    <p>Alla olevassa esimerkissä luodaan lista merkkijonoista, lisätään siihen arvoja ja poistetaan yksi arvo.</p>
+
+    <pre><code class="language-csharp">List&lt;string&gt; nimet = new List&lt;string&gt;();
+
+// Lisätään nimiä listaan
+nimet.Add("Anna");
+nimet.Add("Mikko");
+nimet.Add("Sara");
+
+// Tulostetaan nimet
+Console.WriteLine("Nimet listassa:");
+int i = 0;
+while (i &lt; nimet.Count)
+{
+    Console.WriteLine(nimet[i]);
+    i++;
+}
+
+// Poistetaan yksi nimi
+nimet.Remove("Mikko");
+
+Console.WriteLine("\nNimet listassa poiston jälkeen:");
+i = 0;
+while (i &lt; nimet.Count)
+{
+    Console.WriteLine(nimet[i]);
+    i++;
+}</code></pre>
+
+    <pre class="output" data-title="Konsoli"><code>Nimet listassa:
+Anna
+Mikko
+Sara
+
+Nimet listassa poiston jälkeen:
+Anna
+Sara</code></pre>
+
+    <h2>Harjoitukset</h2>
+    <div class="callout task">
+      <strong class="callout-title">Harjoitukset Moodlessa</strong>
+      <p>Tämän osan harjoitukset tehdään ja palautetaan Moodlessa.</p>
+    </div>
+  </main>
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>
